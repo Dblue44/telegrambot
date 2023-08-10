@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "@mui/material/Button";
 import { useDispatch, useSelector } from "react-redux";
-import { logout, selectIsAuth } from "../../Redux/slices/auth";
+import { logout, checkIsAuth } from "../../Redux/features/auth/authSlice";
 
 import Container from "@mui/material/Container";
 import { Link } from "react-router-dom";
@@ -9,12 +9,12 @@ import styles from "./Menu.module.scss";
 
 const Menu = () => {
     const dispatch = useDispatch();
-    const isAuth = useSelector(selectIsAuth);
+    const isAuth = useSelector(checkIsAuth);
 
     const onClickLogout = () => {
         if (window.confirm("Вы действительно хотите выйти?")) {
             dispatch(logout());
-            window.localStorage.removeItem("BPMCSRF");
+            window.localStorage.removeItem("bpmcsrf");
         }
     };
 
@@ -23,7 +23,7 @@ const Menu = () => {
             <Container maxWidth="lg">
                 <div className={styles.inner}>
                     <Link className={styles.logo} to="/">
-                        <div>TELEGRAM BOT</div>
+                        <div>Creatio</div>
                     </Link>
                     <div className={styles.buttons}>
                         {isAuth ? (
