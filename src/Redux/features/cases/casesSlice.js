@@ -2,23 +2,27 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../../../utils/axios";
 
 export const fetchAllMyCases = createAsyncThunk(
-    "cases",
-    async ({ UserId }) => {
-        const { data } = await axios.get(`0/odata/Case?$filter=Contact eq '${UserId}'`).catch((err) => {
-            console.log(err);
-        });
-        // @odata.context и value
-        return data;
+    "cases/fetchAllMyCases",
+    async ( UserId ) => {
+        try{
+            const { data } = await axios.get(`/cases/${UserId}`);
+            // @odata.context и value
+            return data;
+        } catch (error) {
+            return error.response.data;
+        }
     });
 
 const initialState = {
     cases: [],
-    newCaseCategory: null,
-    newCaseSubcategory: null,
+    currentCase: {},
+    newCaseCategory: "",
+    newCaseSubcategory: "",
     newCaseCriticality: false,
-    newCaseTheme: null,
-    newCaseProblem: null,
-    loading: false,
+    currentPage: 1,
+    pageSize: 20,
+    totalCases: 0,
+    isLoading: false,
 }
 
 export const casesSlice = createSlice({
@@ -33,12 +37,6 @@ export const casesSlice = createSlice({
         },
         setCaseCriticality: (state, action) => {
             state.newCaseCriticality = action.payload
-        },
-        setCaseTheme: (state, action) => {
-            state.newCaseTheme = action.payload
-        },
-        setCaseProblem: (state, action) => {
-            state.newCaseProblem = action.payload
         },
     },
     extraReducers: {
@@ -55,5 +53,5 @@ export const casesSlice = createSlice({
     }
 });
 
-export const { setCaseTheme, setCaseProblem, setCaseCategory, setCaseSubcategory, setCaseCriticality } = casesSlice.actions;
+export const { setCaseCategory, setCaseSubcategory, setCaseCriticality } = casesSlice.actions;
 export default casesSlice.reducer

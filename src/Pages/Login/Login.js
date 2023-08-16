@@ -5,6 +5,7 @@ import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import { useForm } from "react-hook-form";
 import styles from "./Login.module.css";
+import {paperClasses, styled} from "@mui/material";
 
 
 const Login = (props) => {
@@ -19,10 +20,15 @@ const Login = (props) => {
         },
         mode: "onChange",
     });
-
+    const StyledPaper = styled(Paper)(({theme}) => ({
+        [`&.${paperClasses.root}`]: {
+            width: '300px',
+            padding: '30px',
+        }
+    }))
 
     return (
-        <Paper classes={{ root: styles.root }}>
+        <StyledPaper classes={{ root: styles.root }}>
             <Typography classes={{ root: styles.title }} variant="h5">
                 Вход в аккаунт Creatio
             </Typography>
@@ -53,7 +59,7 @@ const Login = (props) => {
                     Войти
                 </Button>
             </form>
-        </Paper>
+        </StyledPaper>
     );
 }
 

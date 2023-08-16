@@ -7,33 +7,31 @@ import {useDispatch, useSelector} from 'react-redux';
 
 import Login from "./Login";
 
-const LoginApiComponent = (props) => {
+const LoginApiComponent = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate()
 
     const isAuth = useSelector(checkIsAuth);
-    const { status } = useSelector((state) => state.auth)
 
     useEffect(() => {
-        if (status) toast.warn(status)
         if (isAuth) navigate('/')
-    }, [status, isAuth, navigate])
+    }, [isAuth, navigate])
 
     const onSubmit = async (values) => {
         try {
             const data = await dispatch(fetchAuth(values));
-            if (data.payload instanceof Array){
-                const array = data.payload;
-                if (array.length === 1){
-                    toast.warn(array[0]?.msg)
-                } else {
-                    toast.warn("Неверный формат логина и пароля")
-                }
-            }
-            if (data.payload instanceof Object){
-                if (data.payload.error){
-                    toast.error(data.payload.error);
-                }
+            // eslint-disable-next-line default-case
+            switch(data.payload.status) {
+                case "error":
+                    if (data.payload.error) {
+                        toast.error(data.payload.error);
+                    } else {
+                        toast.warn("Неверный логин или пароль")
+                    }
+                    return;
+                case "success":
+                    toast.success(data.payload.message);
+                    return;
             }
         } catch (err){
             toast.error("Не удалось подключиться к серверу")

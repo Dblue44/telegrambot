@@ -20,7 +20,7 @@ const Menu = () => {
 
     return (
         <div className={styles.Menu}>
-            <Container maxWidth="lg">
+            <Container fixed>
                 <div className={styles.inner}>
                     <Link className={styles.logo} to="/">
                         <div>Creatio</div>

@@ -54,6 +54,7 @@ const authSlice = createSlice({
     },
 });
 
+export const getUserId = (state) => state.auth.userId;
 export const checkIsAuth = (state) => Boolean(state.auth.bpmcsrf);
 export const { logout } = authSlice.actions;
 export default authSlice.reducer;

@@ -5,7 +5,7 @@ import caseReducer from "./features/cases/casesSlice"
 const store = configureStore({
     reducer: {
         auth: authReducer,
-        case: caseReducer,
+        cases: caseReducer,
     },
 });
 

@@ -1,17 +1,44 @@
 import React from "react";
 
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
-import Paper from "@mui/material/Paper";
-import Button from "@mui/material/Button";
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import PersonIcon from '@mui/icons-material/Person';
+import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 
-import styles from "./Main.module.css";
+import {ButtonGroup, styled} from "@mui/material";
+import Button from "@mui/material/Button"
+import Container from "@mui/material/Container";
+import {useNavigate} from "react-router-dom";
 
-const Main = (props) => {
-    <div>
-        21321321
-    </div>
+const Main = () => {
+    const navigate = useNavigate()
+    const gotoCreateCase = () => {
+        navigate("/cases/create")
+    }
+    const gotoMyCases = () => {
+        navigate("/cases/my")
+    }
+    const gotoCallOperator = () => {
+        navigate("/")
+    }
+    const MainButton = styled(Button)(({ theme }) => ({
+        fontSize: 22,
+    }));
+    return (
+        <>
+            <Container fixed>
+                <ButtonGroup
+                    orientation="vertical"
+                    variant="contained"
+                    aria-label="vertical outlined button group"
+                >
+                    <MainButton size="large" endIcon={<AddCircleOutlineIcon />} onClick={gotoCreateCase}>Создать заявку</MainButton>
+                    <MainButton size="large" endIcon={<LibraryBooksIcon />} onClick={gotoMyCases}>Мои заявки</MainButton>
+                    <MainButton size="large" endIcon={<PersonIcon />} onClick={gotoCallOperator}>Позвать оператора</MainButton>
+                </ButtonGroup>
+            </Container>
 
+        </>
+    );
 };
 
 export default Main
