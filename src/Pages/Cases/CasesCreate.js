@@ -98,7 +98,7 @@ const CasesCreate = (props) => {
                     {...register("Problem", { required: "Опишите вашу проблему" })}
                 />
                 <Button
-                    disabled={!isValid}
+                    disabled={!isValid || props.subCategory === "" || props.category === ""}
                     type="submit"
                     size="large"
                     variant="contained"

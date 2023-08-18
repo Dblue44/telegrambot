@@ -5,8 +5,8 @@ export const fetchAllMyCases = createAsyncThunk(
     "cases/fetchAllMyCases",
     async ( UserId ) => {
         try{
+            // UserId пока любой передавать можно
             const { data } = await axios.get(`/cases/${UserId}`);
-            // @odata.context и value
             return data;
         } catch (error) {
             return error.response.data;

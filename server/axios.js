@@ -1,17 +1,23 @@
 import axios from "axios";
-axios.defaults.xsrfHeaderName = "BPMCSRF";
-axios.defaults.xsrfCookieName = "BPMCSRF";
 axios.defaults.headers.common["ForceUseSession"] = true;
 axios.defaults.headers.common["Accept"] = "application/json";
 axios.defaults.headers.common["Content-Type"] = "application/json; charset=utf-8";
+axios.defaults.withCredentials = true
 
-const instance = axios.create({
+let instance = axios.create({
     baseURL: "https://dev-freshmarket.cloudbpm.ru",
-    withCredentials: true
 });
 
-export const setBPMCSRF = (bpmcsrf) => {
-    instance.defaults.headers.common['BPMCSRF'] = bpmcsrf;
+export const setNewAxios = (Cookies, bpmcsrf) => {
+    instance = axios.create({
+        baseURL: "https://dev-freshmarket.cloudbpm.ru",
+        headers: {
+            "ForceUseSession": true,
+            "Accept": "application/json",
+            "Content-Type": "application/json; charset=utf-8",
+            "Cookie": Cookies,
+            "BPMCSRF": bpmcsrf
+        }
+    });
 };
-
 export default instance;

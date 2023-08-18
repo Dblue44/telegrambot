@@ -1,2 +1,2 @@
+export * as CasesController from './CaseController.js';
 export * as UserController from './UserController.js';
-export * as PostController from './CaseController.js';

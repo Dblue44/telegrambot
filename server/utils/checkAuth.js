@@ -3,7 +3,8 @@ export default (req, res, next) => {
     const token = (req.headers.bpmcsrf || "");
     if (!token) {
         return res.status(403).json({
-            message: "Нет доступа"
+            message: "Нет доступа",
+            status: "error",
         })
     }
     next();

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "../../../utils/axios";
+import axios, {setBPMCSRF} from "../../../utils/axios";
 
 export const fetchAuth = createAsyncThunk(
     "auth/fetchAuth",
@@ -9,11 +9,12 @@ export const fetchAuth = createAsyncThunk(
             if (data.bpmcsrf){
                 window.localStorage.setItem("bpmcsrf", data.bpmcsrf);
             }
+            setBPMCSRF(data.bpmcsrf);
             return data;
         } catch (error) {
             return error.response.data;
         }
-});
+    });
 
 const initialState = {
     userId: null,
@@ -58,4 +59,3 @@ export const getUserId = (state) => state.auth.userId;
 export const checkIsAuth = (state) => Boolean(state.auth.bpmcsrf);
 export const { logout } = authSlice.actions;
 export default authSlice.reducer;
-

@@ -1,15 +1,8 @@
 import React, {useState} from "react";
-import { useDispatch, useSelector} from 'react-redux';
-
-//import {fetchAllMyCases} from "../../Redux/features/cases/casesSlice";
-//import {withAuthRedirect} from "../../Hoc/withAuthRedirect";
+import { useSelector} from 'react-redux';
 
 import Cases from "./Cases";
-//import {getUserId} from "../../Redux/features/auth/authSlice";
 
-import Button from "@mui/material/Button";
-import {toast} from "react-toastify";
-import {useNavigate} from "react-router-dom";
 
 const cases = [
     {
@@ -280,28 +273,12 @@ const cases = [
 const CasesApiComponent = () => {
     const [solvedFilter, setSolvedFilter] = useState(false);
     const isLoading = useSelector((props) => props.cases.isLoading);
-    //const UserId = getUserId();
-    const navigate = useNavigate()
-    //const dispatch = useDispatch();
 
     const handleSolvedFilter = (event) => {
         setSolvedFilter(event.target.checked);
     };
-
-    const getMyCases = async () => {
-        try {
-            //const data = await dispatch(fetchAllMyCases("30c62ce1-b58b-4ad0-b9e6-0084d25accd2"));
-            //console.log(data)
-            //return data
-            console.log("НА ДАННЫЙ МОМЕНТ ЭТА ФУНКЦИЯ НЕ РАБОТАЕТ")
-        } catch (err) {
-            toast.error("Не удалось загрузить данные")
-            navigate("/")
-        }
-    }
     return (
         <>
-            <Button onClick={getMyCases}>Получить заявки</Button>
             <Cases
                 isLoading={isLoading}
                 cases={cases}
