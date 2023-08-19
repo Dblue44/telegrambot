@@ -7,7 +7,7 @@ import {useForm} from "react-hook-form";
 import {
     FormControl,
     formControlClasses, FormControlLabel,
-    InputLabel,
+    InputLabel, ListSubheader, listSubheaderClasses,
     MenuItem,
     paperClasses,
     Select,
@@ -40,7 +40,11 @@ const CasesCreate = (props) => {
             marginTop: '20px'
         }
     }))
-
+    const StyledListSubheader = styled(ListSubheader)(() => ({
+        [`&.${listSubheaderClasses.sticky}`]: {
+            background: '#d6d6d6'
+        }
+    }))
     return (
         <StyledPaper classes={{root: styles.root}}>
             <Typography variant="h5">
@@ -56,9 +60,16 @@ const CasesCreate = (props) => {
                         label="Категория"
                         onChange={props.chooseCategory}
                     >
-                        {props.categories.map((category) => (
-                            <MenuItem key={category.id} value={category.id}>{category.name}</MenuItem>
-                        ))}
+                        <StyledListSubheader>ПО</StyledListSubheader>
+                            {props.CategoriesPO.map((category) => (
+                                <MenuItem   key={category.id} value={category.id}>{category.name}</MenuItem>
+                            ))}
+                        <StyledListSubheader>Оборудование</StyledListSubheader>
+                            {props.CategoriesTech.map((category) => (
+                                <MenuItem   key={category.id} value={category.id}>{category.name}</MenuItem>
+                            ))}
+                        <StyledListSubheader>Доступ</StyledListSubheader>
+                            <MenuItem   key={15} value={15}>Доступ</MenuItem>
                     </Select>
                 </StyledFormControl>
                 {Boolean(props.category) &&
@@ -76,7 +87,7 @@ const CasesCreate = (props) => {
                             ))}
                         </Select>
                     </StyledFormControl> }
-                <FormControlLabel control={<Switch onChange={props.setCriticality}/>} label="Заявка критична?" labelPlacement="start"/>
+                <FormControlLabel control={<Switch checked={props.criticality} onChange={props.setCriticality}/>} label="Заявка критична?" labelPlacement="start"/>
                 <TextField
                     id="Theme-text"
                     label="Тема заявки"
@@ -90,7 +101,7 @@ const CasesCreate = (props) => {
                     id="Problem-text"
                     label="Описание проблемы"
                     multiline
-                    maxRows={3}
+                    maxRows={4}
                     fullWidth
                     margin="normal"
                     error={Boolean(errors.Problem?.message)}
