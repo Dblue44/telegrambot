@@ -19,7 +19,7 @@ import {
     TableSortLabel,
     tableSortLabelClasses,
     formControlClasses,
-    nativeSelectClasses, NativeSelect
+    nativeSelectClasses, NativeSelect, tableBodyClasses, tablePaginationClasses
 } from "@mui/material";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
@@ -246,6 +246,19 @@ const Cases = (props) => {
     if (props.isLoading) {
         return <CasesSkeleton/>
     }
+
+    const StyledTableBody = styled(TableBody)(() => ({
+        [`&.${tableBodyClasses.root}`]: {
+            background: 'white'
+        }
+    }))
+
+    const StyledTablePagination = styled(TablePagination)(() => ({
+        [`&.${tablePaginationClasses.root}`]: {
+            background: 'white'
+        }
+    }))
+
     return (
         <>
             <Container maxWidth="xl" sx={{ justifyContent: 'center', display: 'grid'}}>
@@ -259,14 +272,14 @@ const Cases = (props) => {
                             handleChangeStatusFilter={handleChangeStatusFilter}
                             statusFilter={status}
                         />
-                        <TableBody>
+                        <StyledTableBody>
                             {visibleRows.map((Case) => (
                                 <Row key={Case.id} caseItem={Case}/>
                             ))}
-                        </TableBody>
+                        </StyledTableBody>
                     </Table>
                 </TableContainer>
-                <TablePagination
+                <StyledTablePagination
                     sx={{ maxWidth: 390 }}
                     labelRowsPerPage={'Заявок'}
                     rowsPerPageOptions={[10, 20]}

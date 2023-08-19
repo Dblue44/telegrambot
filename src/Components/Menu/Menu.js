@@ -19,35 +19,33 @@ const Menu = () => {
     };
 
     return (
-        <div className={styles.Menu}>
-            <Container fixed>
-                <div className={styles.inner}>
-                    <Link className={styles.logo} to="/">
-                        <div>Creatio</div>
-                    </Link>
-                    <div className={styles.buttons}>
-                        {isAuth ? (
-                            <>
-                                <Button
-                                    onClick={onClickLogout}
-                                    variant="contained"
-                                    color="error"
-                                >
-                                    Выйти
-                                </Button>
-                            </>
-                        ) : (
-                            <>
-                                {/* eslint-disable-next-line react/jsx-no-undef */}
-                                <Link to="/login">
-                                    <Button variant="outlined">Войти</Button>
-                                </Link>
-                            </>
-                        )}
-                    </div>
+        <Container fixed sx={{paddingTop: "1em", paddingBottom: "1em"}}>
+            <div className={styles.inner}>
+                <Link className={styles.logo} to="/">
+                    <div>Creatio</div>
+                </Link>
+                <div className={styles.buttons}>
+                    {isAuth ? (
+                        <>
+                            <Button
+                                onClick={onClickLogout}
+                                variant="contained"
+                                color="error"
+                            >
+                                Выйти
+                            </Button>
+                        </>
+                    ) : (
+                        <>
+                            {/* eslint-disable-next-line react/jsx-no-undef */}
+                            <Link to="/login">
+                                <Button variant="outlined">Войти</Button>
+                            </Link>
+                        </>
+                    )}
                 </div>
-            </Container>
-        </div>
+            </div>
+        </Container>
     );
 };
 
