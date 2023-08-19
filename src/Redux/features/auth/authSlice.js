@@ -1,20 +1,15 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-//import axios, {setBPMCSRF} from "../../../utils/axios";
+import axios, {setBPMCSRF} from "../../../utils/axios";
 
 export const fetchAuth = createAsyncThunk(
     "auth/fetchAuth",
     async (values) => {
         try{
-            //const { data } = await axios.post("/auth/login", values)
-            //if (data.bpmcsrf){
-            //    window.localStorage.setItem("bpmcsrf", data.bpmcsrf);
-            //}
-            //setBPMCSRF(data.bpmcsrf);
-            const data = {
-                message: "Авторизация пройдена успешно",
-                bpmcsrf: "CURRENTUSERTOKEN",
-                status: "success"
+            const { data } = await axios.post("/auth/login", values)
+            if (data.bpmcsrf){
+               window.localStorage.setItem("bpmcsrf", data.bpmcsrf);
             }
+            setBPMCSRF(data.bpmcsrf);
             return data;
         } catch (error) {
             return error.response.data;
