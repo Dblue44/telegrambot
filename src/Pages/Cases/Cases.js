@@ -28,8 +28,6 @@ import { visuallyHidden } from '@mui/utils';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
-import CheckIcon from '@mui/icons-material/Check';
-
 // Каждую запись можно открыть чтобы посмотреть подробную информацию по заявке
 function Row(props) {
     const {caseItem} = props;
@@ -100,7 +98,7 @@ function EnhancedTableHead(props) {
     };
     const StyledTableCell = styled(TableCell)(({theme}) => ({
         [`&.${tableCellClasses.head}`]: {
-            backgroundColor: theme.palette.info.light,
+            backgroundColor: "#33a938",
             color: theme.palette.common.white,
         },
         [`&.${tableCellClasses.root}`]: {
@@ -118,14 +116,14 @@ function EnhancedTableHead(props) {
             color: theme.palette.common.white,
         },
         [`&.${nativeSelectClasses.root} .MuiNativeSelect-select option`]: {
-            backgroundColor: theme.palette.info.light,
+            backgroundColor: "#33a938",
             paddingBottom: "10px"
         }
     }))
 
     const StyledFormControl = styled(FormControl)(({theme}) => ({
         [`&.${formControlClasses.root}`]: {
-            backgroundColor: theme.palette.info.light,
+            backgroundColor: "#33a938",
             color: theme.palette.common.white,
             height: '51px',
             display: 'flex',
