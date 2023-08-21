@@ -3,10 +3,11 @@ import axios from "../../../utils/axios";
 
 export const fetchAllMyCases = createAsyncThunk(
     "cases/fetchAllMyCases",
-    async ( UserId ) => {
+    async () => {
         try{
             // UserId пока любой передавать можно
-            const { data } = await axios.get(`/cases/${UserId}`);
+            const { data } = await axios.get(`/0/odata/ITdsTelegramChat(08d48701-16b0-4fd5-a691-f8c72ecf7101)`);
+            debugger;
             return data;
         } catch (error) {
             return error.response.data;

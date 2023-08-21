@@ -33,7 +33,6 @@ const Main = () => {
                 >
                     <MainButton size="large" endIcon={<AddCircleOutlineIcon />} onClick={gotoCreateCase}>Создать заявку</MainButton>
                     <MainButton size="large" endIcon={<LibraryBooksIcon />} onClick={gotoMyCases}>Мои заявки</MainButton>
-                    <MainButton size="large" endIcon={<PersonIcon />} onClick={gotoCallOperator}>Позвать оператора</MainButton>
                 </ButtonGroup>
             </Container>
 

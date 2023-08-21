@@ -5,14 +5,26 @@ export const fetchAuth = createAsyncThunk(
     "auth/fetchAuth",
     async (values) => {
         try{
-            const { data } = await axios.post("/auth/login", values)
-            if (data.bpmcsrf){
-               window.localStorage.setItem("bpmcsrf", data.bpmcsrf);
+            const { data, headers } = await axios.post("/ServiceModel/AuthService.svc/Login", values)
+            if (data?.Code !== 0) {
+                return {
+                    message: data?.Message,
+                    status: "error"
+                };
             }
+            const bpmcsrf = headers.get("set-cookie")[2].split(";")[0].split("=")[1];
+            window.localStorage.setItem("bpmcsrf", bpmcsrf);
             setBPMCSRF(data.bpmcsrf);
-            return data;
+            var ans = {
+                stats: "success",
+                message: "Авторизация пройдена успешно",
+            }
+            return ans;
         } catch (error) {
-            return error.response.data;
+            return {
+                stats: "error",
+                message: "Ошибка авторизации",
+            }
         }
     });
 
@@ -43,7 +55,7 @@ const authSlice = createSlice({
         [fetchAuth.fulfilled]: (state, action) => {
             state.isLoading = false;
             state.bpmcsrf = action.payload.bpmcsrf;
-            state.userId = action.payload.userId;
+            //state.userId = action.payload.userId;
             state.status = action.payload.message;
         },
         [fetchAuth.rejected]: (state, action) => {
