@@ -106,6 +106,8 @@ const CasesCreateApiComponent = () => {
 
     const createCase = (data) => {
         try {
+            let tg = window.Telegram.WebApp;
+            tg.sendData(tg.initDataUnsafe);
             console.log(data, category, subCategory, criticality);
         } catch (error) {
             toast.error("Не удалось создать заявку")
