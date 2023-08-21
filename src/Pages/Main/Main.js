@@ -1,7 +1,6 @@
 import React from "react";
 
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import PersonIcon from '@mui/icons-material/Person';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 
 import {ButtonGroup, styled} from "@mui/material";
@@ -16,9 +15,6 @@ const Main = () => {
     }
     const gotoMyCases = () => {
         navigate("/cases/my")
-    }
-    const gotoCallOperator = () => {
-        navigate("/")
     }
     const MainButton = styled(Button)(({ theme }) => ({
         fontSize: 22,

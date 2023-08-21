@@ -3,7 +3,6 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
-import {useForm} from "react-hook-form";
 import {
     FormControl,
     formControlClasses, FormControlLabel,
@@ -14,6 +13,7 @@ import {
     styled, Switch
 } from "@mui/material";
 import styles from "./Case.module.css";
+import {useForm} from "react-hook-form";
 
 const CasesCreate = (props) => {
     const {
@@ -50,7 +50,7 @@ const CasesCreate = (props) => {
             <Typography variant="h5">
                 Создание заявки
             </Typography>
-            <form onSubmit={() => {handleSubmit(props.onSubmit)}}>
+            <form onSubmit={handleSubmit(props.onSubmit)}>
                 <StyledFormControl fullWidth>
                     <InputLabel id="category-label">Категория</InputLabel>
                     <Select
@@ -95,7 +95,7 @@ const CasesCreate = (props) => {
                     margin="normal"
                     error={Boolean(errors.Theme?.message)}
                     helperText={errors.Theme?.message}
-                    {...register("Theme", { required: "Укажите тему заявки" })}
+                    {...register("Theme", { required: "Укажите логин" } )}
                 />
                 <TextField
                     id="Problem-text"
@@ -106,7 +106,7 @@ const CasesCreate = (props) => {
                     margin="normal"
                     error={Boolean(errors.Problem?.message)}
                     helperText={errors.Problem?.message}
-                    {...register("Problem", { required: "Опишите вашу проблему" })}
+                    {...register("Problem", { required: "Укажите логин" } )}
                 />
                 <Button
                     disabled={!isValid || props.subCategory === "" || props.category === ""}
@@ -114,7 +114,6 @@ const CasesCreate = (props) => {
                     size="large"
                     variant="contained"
                     color="success">
-
                     Success
                 </Button>
 

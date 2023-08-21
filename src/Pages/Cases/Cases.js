@@ -14,12 +14,12 @@ import {
     TableContainer,
     TableHead,
     TablePagination,
-    FormControl,
     TableRow,
     TableSortLabel,
     tableSortLabelClasses,
-    formControlClasses,
-    nativeSelectClasses, NativeSelect, tableBodyClasses, tablePaginationClasses
+    tableBodyClasses,
+    tablePaginationClasses,
+    InputAdornment, InputLabel, Input, Select, MenuItem, FormControl
 } from "@mui/material";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
@@ -27,6 +27,8 @@ import { visuallyHidden } from '@mui/utils';
 // ICONS
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import SearchIcon from '@mui/icons-material/Search';
+import Paper from "@mui/material/Paper";
 
 // Каждую запись можно открыть чтобы посмотреть подробную информацию по заявке
 function Row(props) {
@@ -76,7 +78,6 @@ Row.propTypes = {
         solved: PropTypes.string.isRequired,
     }).isRequired,
 };
-
 // Описание заголовков таблицы для фильтрации
 const headCells = [
     {
@@ -88,7 +89,6 @@ const headCells = [
         label: 'Тема',
     }
 ];
-
 // Структура заголовков таблицы
 function EnhancedTableHead(props) {
     const { order, orderBy, onRequestSort } =
@@ -111,25 +111,6 @@ function EnhancedTableHead(props) {
         }
     }))
 
-    const StyledNativeSelect = styled(NativeSelect)(({theme}) => ({
-        [`&.${nativeSelectClasses.root}`]: {
-            color: theme.palette.common.white,
-        },
-        [`&.${nativeSelectClasses.root} .MuiNativeSelect-select option`]: {
-            backgroundColor: "#33a938",
-            paddingBottom: "10px"
-        }
-    }))
-
-    const StyledFormControl = styled(FormControl)(({theme}) => ({
-        [`&.${formControlClasses.root}`]: {
-            backgroundColor: "#33a938",
-            color: theme.palette.common.white,
-            height: '51px',
-            display: 'flex',
-            justifyContent: 'center'
-        }
-    }))
     return (
         <TableHead>
             <TableRow>
@@ -155,23 +136,11 @@ function EnhancedTableHead(props) {
                         </StyledTableSortLabel>
                     </StyledTableCell>
                 ))}
-                <StyledTableCell sx={{width: '50px', borderTopRightRadius: '15px'}}>
-                    <StyledFormControl variant="standard" sx={{minWidth: 80}}>
-                        <StyledNativeSelect
-                            value={props.statusFilter}
-                            onChange={props.handleChangeStatusFilter}
-                        >
-                            <option value={"All"}>Статус</option>
-                            <option value={"В работе"}>В работе</option>
-                            <option value={"Решено"}>Завершена</option>
-                        </StyledNativeSelect>
-                    </StyledFormControl>
-                </StyledTableCell>
+                <StyledTableCell sx={{width: '50px', borderTopRightRadius: '15px'}} align="center">Статус</StyledTableCell>
             </TableRow>
         </TableHead>
     );
 }
-
 EnhancedTableHead.propTypes = {
     onRequestSort: PropTypes.func.isRequired,
     order: PropTypes.oneOf(['asc', 'desc']).isRequired,
@@ -203,6 +172,7 @@ function stableSort(array, comparator) {
     });
     return stabilizedThis.map((el) => el[0]);
 }
+
 const Cases = (props) => {
     const [cases, setCases] = useState(props.cases);
     const [order, setOrder] = useState('asc');
@@ -224,16 +194,27 @@ const Cases = (props) => {
         setOrder(isAsc ? 'desc' : 'asc');
         setOrderBy(property);
     };
-
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
-
     const handleChangeRowsPerPage = (event) => {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
     };
-
+    const findCaseByTheme = (event) => {
+        setCases(props.cases.filter((CurrentCase) => {
+            return CurrentCase.theme.toLowerCase().includes(event.target.value.toLowerCase());
+        }));
+    }
+    const findCaseByNumber = (event) => {
+        let target = event.target.value.toLowerCase()
+        if (target[0] !== "#"){
+            target = "#" + target;
+        }
+        setCases(props.cases.filter((CurrentCase) => {
+            return CurrentCase.number.toLowerCase().includes(target);
+        }));
+    }
     const visibleRows = useMemo(() =>
             stableSort(cases, getComparator(order, orderBy)).slice(
                 page * rowsPerPage,
@@ -260,6 +241,58 @@ const Cases = (props) => {
     return (
         <>
             <Container maxWidth="xl" sx={{ justifyContent: 'center', display: 'grid'}}>
+                <Paper sx={{marginBottom: "1em"}}  variant="outlined">
+                    <Container sx={{display: "grid", paddingTop: "1em", gridTemplateRows: "4em 4em 5em"}}>
+                        <Container>
+                            <InputLabel htmlFor="input-search-by-theme">
+                                Поиск по теме заявки
+                            </InputLabel>
+                            <Input
+                                sx={{width: "100%"}}
+                                id="input-search-by-theme"
+                                placeholder="Поиск ..."
+                                onChange={findCaseByTheme}
+                                startAdornment={
+                                    <InputAdornment position="start">
+                                        <SearchIcon />
+                                    </InputAdornment>
+                                }
+                            />
+                        </Container>
+                        <Container>
+
+                            <InputLabel htmlFor="input-search-by-theme">
+                                Поиск по номеру заявки
+                            </InputLabel>
+                            <Input
+                                sx={{width: "100%"}}
+                                id="input-search-by-theme"
+                                placeholder="Поиск ..."
+                                onChange={findCaseByNumber}
+                                startAdornment={
+                                    <InputAdornment position="start">
+                                        <SearchIcon />
+                                    </InputAdornment>
+                                }
+                            />
+                        </Container>
+                        <Container sx={{display: "grid", alignItems: "center"}}>
+                            <FormControl fullWidth>
+                                <InputLabel sx={{backgroundColor: "white"}} id="status-label">Статус</InputLabel>
+                                <Select
+                                    labelId="status-label"
+                                    id="status-select"
+                                    value={status}
+                                    onChange={handleChangeStatusFilter}
+                                >
+                                    <MenuItem value={"All"}>Статус</MenuItem>
+                                    <MenuItem value={"В работе"}>В работе</MenuItem>
+                                    <MenuItem value={"Решено"}>Решено</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Container>
+                    </Container>
+                </Paper>
                 <TableContainer sx={{minWidth: '360px'}}>
                     <Table aria-label="collapsible table">
                         <EnhancedTableHead
@@ -267,8 +300,6 @@ const Cases = (props) => {
                             orderBy={orderBy}
                             onRequestSort={handleRequestSort}
                             rowCount={cases.length}
-                            handleChangeStatusFilter={handleChangeStatusFilter}
-                            statusFilter={status}
                         />
                         <StyledTableBody>
                             {visibleRows.map((Case) => (

@@ -91,29 +91,28 @@ const CasesCreateApiComponent = () => {
     const category = useSelector((store) => store.cases.newCaseCategory);
     const subCategory = useSelector((store) => store.cases.newCaseSubcategory);
     const criticality = useSelector((store) => store.cases.newCaseCriticality)
-
     const chooseCategory = (event) => {
         if (category !== event.target.value){
             dispatch(setCaseCategory(event.target.value));
             dispatch(setCaseSubcategory(""));
         }
     }
-
     const chooseSubCategory = (event) => {
         dispatch(setCaseSubcategory(event.target.value));
     }
-
     const setCriticality = (event) => {
         dispatch(setCaseCriticality(event.target.checked));
     }
 
-    const createCase = async () => {
+    const createCase = (data) => {
         try {
-
+            console.log(data, category, subCategory, criticality);
+            debugger;
         } catch (error) {
             toast.error("Не удалось создать заявку")
         }
     }
+
     return (
         <>
             <CasesCreate

@@ -284,6 +284,7 @@ const CasesApiComponent = () => {
     const handleSolvedFilter = (event) => {
         setSolvedFilter(event.target.checked);
     };
+
     return (
         <>
             <Cases
