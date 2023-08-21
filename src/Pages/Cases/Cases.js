@@ -241,7 +241,7 @@ const Cases = (props) => {
     return (
         <>
             <Container maxWidth="xl" sx={{ justifyContent: 'center', display: 'grid'}}>
-                <Paper sx={{marginBottom: "1em"}}  variant="outlined">
+                <Paper sx={{marginBottom: "1em", borderRadius: "15px"}}  variant="outlined">
                     <Container sx={{display: "grid", paddingTop: "1em", gridTemplateRows: "4em 4em 5em"}}>
                         <Container>
                             <InputLabel htmlFor="input-search-by-theme">

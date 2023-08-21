@@ -107,7 +107,6 @@ const CasesCreateApiComponent = () => {
     const createCase = (data) => {
         try {
             console.log(data, category, subCategory, criticality);
-            debugger;
         } catch (error) {
             toast.error("Не удалось создать заявку")
         }
