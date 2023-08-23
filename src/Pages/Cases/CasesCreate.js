@@ -3,6 +3,7 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
+
 import {
     FormControl,
     formControlClasses, FormControlLabel,
@@ -13,20 +14,9 @@ import {
     styled, Switch
 } from "@mui/material";
 import styles from "./Case.module.css";
-import {useForm} from "react-hook-form";
 
 const CasesCreate = (props) => {
-    const {
-        register,
-        handleSubmit,
-        formState: {errors, isValid},
-    } = useForm({
-        defaultValues: {
-            Theme: "",
-            Problem: "",
-        },
-        mode: "onChange",
-    });
+
 
     const StyledPaper = styled(Paper)(() => ({
         [`&.${paperClasses.root}`]: {
@@ -50,7 +40,7 @@ const CasesCreate = (props) => {
             <Typography variant="h5">
                 Создание заявки
             </Typography>
-            <form onSubmit={handleSubmit(props.onSubmit)}>
+            <form noValidate onSubmit={props.handleSubmit(props.onSubmit)}>
                 <StyledFormControl fullWidth>
                     <InputLabel id="category-label">Категория</InputLabel>
                     <Select
@@ -93,9 +83,9 @@ const CasesCreate = (props) => {
                     label="Тема заявки"
                     fullWidth
                     margin="normal"
-                    error={Boolean(errors.Theme?.message)}
-                    helperText={errors.Theme?.message}
-                    {...register("Theme", { required: "Укажите логин" } )}
+                    error={!!props.themeError}
+                    helperText={props?.themeError}
+                    {...props.register("Theme" )}
                 />
                 <TextField
                     id="Problem-text"
@@ -104,17 +94,18 @@ const CasesCreate = (props) => {
                     maxRows={4}
                     fullWidth
                     margin="normal"
-                    error={Boolean(errors.Problem?.message)}
-                    helperText={errors.Problem?.message}
-                    {...register("Problem", { required: "Укажите логин" } )}
+                    error={!!props.problemError}
+                    helperText={props?.problemError}
+                    {...props.register("Problem" )}
                 />
+
                 <Button
-                    disabled={!isValid || props.subCategory === "" || props.category === ""}
+                    disabled={props.subCategory === "" || props.category === ""}
                     type="submit"
                     size="large"
                     variant="contained"
                     color="success">
-                    Success
+                    Создать
                 </Button>
 
             </form>

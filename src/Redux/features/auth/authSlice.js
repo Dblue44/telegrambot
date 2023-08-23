@@ -1,11 +1,11 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import axios, {setBPMCSRF} from "../../../utils/axios";
 
 export const fetchAuth = createAsyncThunk(
     "auth/fetchAuth",
     async (values) => {
-        try{
-            const { data, headers } = await axios.post("/ServiceModel/AuthService.svc/Login", values)
+        try {
+            const {data, headers} = await axios.post("/ServiceModel/AuthService.svc/Login", values)
             if (data?.Code !== 0) {
                 return {
                     message: data?.Message,
@@ -15,23 +15,40 @@ export const fetchAuth = createAsyncThunk(
             const bpmcsrf = headers.get("set-cookie")[2].split(";")[0].split("=")[1];
             window.localStorage.setItem("bpmcsrf", bpmcsrf);
             setBPMCSRF(data.bpmcsrf);
-            var ans = {
-                stats: "success",
+            return {
+                status: "success",
                 message: "Авторизация пройдена успешно",
-            }
-            return ans;
+            };
         } catch (error) {
             return {
-                stats: "error",
+                status: "error",
                 message: "Ошибка авторизации",
             }
+        }
+    });
+export const fetchCreatio = createAsyncThunk(
+    "auth/Creatio",
+    (UserId) => {
+        return {
+            message: "Успешная авторизация в Creatio",
+            status: "success"
+        }
+    });
+export const fetchCreatioData = createAsyncThunk(
+    "auth/CreatioData",
+    (UserId) => {
+        return {
+            message: "Успешное получение данных от Creatio",
+            status: "success"
         }
     });
 
 const initialState = {
     userId: null,
     bpmcsrf: null,
-    isLoading: false,
+    isLoadingCreatio: true,
+    isLoadingData: false,
+    success: false,
     status: null,
 };
 
@@ -63,11 +80,31 @@ const authSlice = createSlice({
             state.bpmcsrf = null;
             state.userId = null;
             state.status = action.payload.message;
+        },
+        [fetchCreatio.pending]: (state) => {
+            state.isLoadingCreatio = true;
+        },
+        [fetchCreatio.fulfilled]: (state, action) => {
+            state.isLoadingCreatio = false;
+        },
+        [fetchCreatio.rejected]: (state, action) => {
+            state.isLoadingCreatio = false;
+        },
+        [fetchCreatioData.pending]: (state) => {
+            state.isLoadingData = true;
+        },
+        [fetchCreatioData.fulfilled]: (state, action) => {
+            state.isLoadingData = false;
+        },
+        [fetchCreatioData.rejected]: (state, action) => {
+            state.isLoadingData = false;
         }
     },
 });
 
 export const getUserId = (state) => state.auth.userId;
 export const checkIsAuth = (state) => Boolean(state.auth.bpmcsrf);
-export const { logout } = authSlice.actions;
+export const checkCreatioLoading = (state) => (state.auth.isLoadingCreatio);
+export const checkCreatioDataLoading = (state) => (state.auth.isLoadingData);
+export const {logout} = authSlice.actions;
 export default authSlice.reducer;

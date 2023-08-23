@@ -1,10 +1,11 @@
-import React from "react";
+import React, {useState} from "react";
 //import {withAuthRedirect} from "../../Hoc/withAuthRedirect";
 import {toast} from "react-toastify";
 //import {useNavigate} from "react-router-dom";
 import { useDispatch, useSelector} from "react-redux";
 import CasesCreate from "./CasesCreate";
-import {setCaseCategory, setCaseSubcategory, setCaseCriticality } from "../../Redux/features/cases/casesSlice";
+import {setCaseCategory, setCaseSubcategory, setCaseCriticality, resetNewCaseInfo } from "../../Redux/features/cases/casesSlice";
+import {useForm} from "react-hook-form";
 
 const CategoriesPO = [
     { id: 1, name: "ПО. ЭДО"},
@@ -90,7 +91,19 @@ const CasesCreateApiComponent = () => {
     const dispatch = useDispatch();
     const category = useSelector((store) => store.cases.newCaseCategory);
     const subCategory = useSelector((store) => store.cases.newCaseSubcategory);
-    const criticality = useSelector((store) => store.cases.newCaseCriticality)
+    const criticality = useSelector((store) => store.cases.newCaseCriticality);
+    const [themeError, setThemeError] = useState("");
+    const [problemError, setProblemError] = useState("");
+
+    const form = useForm({
+        defaultValues: {
+            Theme: "",
+            Problem: "",
+        },
+        mode: "onChange",
+    });
+    const {register, handleSubmit, reset } = form;
+
     const chooseCategory = (event) => {
         if (category !== event.target.value){
             dispatch(setCaseCategory(event.target.value));
@@ -106,9 +119,23 @@ const CasesCreateApiComponent = () => {
 
     const createCase = (data) => {
         try {
-            let tg = window.Telegram.WebApp;
-            tg.sendData(tg.initDataUnsafe);
-            console.log(data, category, subCategory, criticality);
+            if (data.Theme === ""){
+                setThemeError("Заполните тему заявки");
+            }
+            if (data.Problem === "") {
+                setProblemError("Опишите вашу проблему");
+            }
+            if (data.Theme !== "" && data.Problem !== "") {
+                setThemeError("");
+                setProblemError("");
+                console.log(data, category, subCategory, criticality);
+                toast.success("Заявка #00000001 упешно создана");
+                reset({
+                    Theme: "",
+                    Problem: "",
+                })
+                dispatch(resetNewCaseInfo())
+            }
         } catch (error) {
             toast.error("Не удалось создать заявку")
         }
@@ -126,6 +153,10 @@ const CasesCreateApiComponent = () => {
                 chooseSubCategory={chooseSubCategory}
                 criticality={criticality}
                 setCriticality={setCriticality}
+                themeError={themeError}
+                problemError={problemError}
+                register={register}
+                handleSubmit={handleSubmit}
                 onSubmit={createCase.bind(this)}/>
         </>
     );

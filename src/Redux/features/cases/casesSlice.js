@@ -39,6 +39,11 @@ export const casesSlice = createSlice({
         setCaseCriticality: (state, action) => {
             state.newCaseCriticality = action.payload
         },
+        resetNewCaseInfo: (state, action) => {
+            state.newCaseCategory = "";
+            state.newCaseSubcategory = "";
+            state.newCaseCriticality = false;
+        },
     },
     extraReducers: {
         [fetchAllMyCases.pending]: (state) => {
@@ -54,5 +59,5 @@ export const casesSlice = createSlice({
     }
 });
 
-export const { setCaseCategory, setCaseSubcategory, setCaseCriticality } = casesSlice.actions;
+export const { setCaseCategory, setCaseSubcategory, setCaseCriticality, resetNewCaseInfo } = casesSlice.actions;
 export default casesSlice.reducer

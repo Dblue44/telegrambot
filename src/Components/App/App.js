@@ -7,21 +7,27 @@ import CasesContainer from "../../Pages/Cases/CasesContainer";
 import Menu from "../Menu/Menu";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css'
+//import Loading from "../Main/Loading";
 
 
 function App() {
-    return (
-        <div className="App">
-            <Menu />
-            <Routes>
-                <Route path="/" element={<MainContainer />}/>
-                <Route path="/login" element={<LoginContainer/>}/>
-                <Route path="/cases/create" element={<CreateCaseContainer/>}/>
-                <Route path="/cases/my" element={<CasesContainer/>}/>
-            </Routes>
 
-            <ToastContainer position='bottom-right' />
-        </div>
+
+    return (
+        <>
+            {/*<Loading />*/}
+            <div className="App">
+                <Menu />
+                <Routes>
+                    <Route path="/" element={<MainContainer />}/>
+                    <Route path="/login" element={<LoginContainer/>}/>
+                    <Route path="/cases/create" element={<CreateCaseContainer/>}/>
+                    <Route path="/cases/my" element={<CasesContainer/>}/>
+                </Routes>
+
+                <ToastContainer position='bottom-right' />
+            </div>
+        </>
     );
 }
 
