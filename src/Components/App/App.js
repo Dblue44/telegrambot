@@ -7,15 +7,40 @@ import CasesContainer from "../../Pages/Cases/CasesContainer";
 import Menu from "../Menu/Menu";
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css'
+//import {useEffect} from "react";
+//import {useDispatch} from "react-redux";
+//import {fetchCreatioData} from "../../Redux/features/auth/authSlice";
+//import Button from "@mui/material/Button";
 //import Loading from "../Main/Loading";
 
 
 function App() {
+    //const dispatch = useDispatch();
 
+    // const getData = async () => {
+    //     try{
+    //         const data = await dispatch(fetchCreatioData());
+    //         console.log(data);
+    //     } catch (err) {
+    //         toast.error("Не удалось подключиться к системе")
+    //     }
+    // };
+    // const CreatioLogin = async () => {
+    //     try{
+    //         const data = await dispatch(fetchAuth());
+    //     } catch (err) {
+    //         toast.error("Не удалось подключиться к системе")
+    //     }
+    // };
+    //
+    // useEffect(() => {
+    //
+    // }, [])
 
     return (
         <>
             {/*<Loading />*/}
+            {/*<Button onClick={getData} >ПОЛУЧИТЬ ДАННЫЕ</Button>*/}
             <div className="App">
                 <Menu />
                 <Routes>

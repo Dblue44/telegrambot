@@ -26,9 +26,12 @@ export const fetchAuth = createAsyncThunk(
             }
         }
     });
-export const fetchCreatio = createAsyncThunk(
-    "auth/Creatio",
-    (UserId) => {
+export const fetchCreatioLogin = createAsyncThunk(
+    "auth/CreatioLogin",
+    async () => {
+        const CREATIO_LOGIN = {"UserName":"DStakheev","UserPassword":"XSW@zaq11"};
+        const {data, headers} = await axios.post("/auth", CREATIO_LOGIN)
+        console.log(data, "\n", headers);
         return {
             message: "Успешная авторизация в Creatio",
             status: "success"
@@ -36,7 +39,9 @@ export const fetchCreatio = createAsyncThunk(
     });
 export const fetchCreatioData = createAsyncThunk(
     "auth/CreatioData",
-    (UserId) => {
+    async () => {
+        const {data, headers} = await axios.get("/cases")
+        console.log(data, "\n", headers);
         return {
             message: "Успешное получение данных от Creatio",
             status: "success"
@@ -46,7 +51,7 @@ export const fetchCreatioData = createAsyncThunk(
 const initialState = {
     userId: null,
     bpmcsrf: null,
-    isLoadingCreatio: true,
+    isLoadingCreatioLogin: true,
     isLoadingData: false,
     success: false,
     status: null,
@@ -81,14 +86,14 @@ const authSlice = createSlice({
             state.userId = null;
             state.status = action.payload.message;
         },
-        [fetchCreatio.pending]: (state) => {
-            state.isLoadingCreatio = true;
+        [fetchCreatioLogin.pending]: (state) => {
+            state.isLoadingCreatioLogin = true;
         },
-        [fetchCreatio.fulfilled]: (state, action) => {
-            state.isLoadingCreatio = false;
+        [fetchCreatioLogin.fulfilled]: (state, action) => {
+            state.isLoadingCreatioLogin = false;
         },
-        [fetchCreatio.rejected]: (state, action) => {
-            state.isLoadingCreatio = false;
+        [fetchCreatioLogin.rejected]: (state, action) => {
+            state.isLoadingCreatioLogin = false;
         },
         [fetchCreatioData.pending]: (state) => {
             state.isLoadingData = true;

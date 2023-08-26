@@ -6,7 +6,7 @@ axios.defaults.headers.common["Content-Type"] = "application/json; charset=utf-8
 axios.defaults.withCredentials = true
 
 const instance = axios.create({
-    baseURL: "https://dev-freshmarket.cloudbpm.ru", //process.env.REACT_APP_API_URL,
+    baseURL: "https://telegram-backend-of4dgx3vy-dblue44.vercel.app", //process.env.REACT_APP_API_URL,
 });
 export const setBPMCSRF = (bpmcsrf) => {
     instance.defaults.headers.common['BPMCSRF'] = bpmcsrf;

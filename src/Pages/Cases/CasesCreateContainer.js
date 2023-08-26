@@ -94,6 +94,7 @@ const CasesCreateApiComponent = () => {
     const criticality = useSelector((store) => store.cases.newCaseCriticality);
     const [themeError, setThemeError] = useState("");
     const [problemError, setProblemError] = useState("");
+    const [inputFiles, setInputFiles] = useState([]);
 
     const form = useForm({
         defaultValues: {
@@ -116,6 +117,12 @@ const CasesCreateApiComponent = () => {
     const setCriticality = (event) => {
         dispatch(setCaseCriticality(event.target.checked));
     }
+
+    const handleUploadFile = (event) => {
+        setInputFiles(event.target.files);
+        debugger;
+        console.log(event.target.files);
+    };
 
     const createCase = (data) => {
         try {
@@ -157,6 +164,8 @@ const CasesCreateApiComponent = () => {
                 problemError={problemError}
                 register={register}
                 handleSubmit={handleSubmit}
+                handleUploadFile={handleUploadFile}
+                inputFiles={inputFiles}
                 onSubmit={createCase.bind(this)}/>
         </>
     );

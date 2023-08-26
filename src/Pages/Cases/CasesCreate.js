@@ -3,8 +3,10 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
+import styles from "./Case.module.css"
 
 import {
+    Box,
     FormControl,
     formControlClasses, FormControlLabel,
     InputLabel, ListSubheader, listSubheaderClasses,
@@ -13,7 +15,8 @@ import {
     Select,
     styled, Switch
 } from "@mui/material";
-import styles from "./Case.module.css";
+import Container from "@mui/material/Container";
+
 
 const CasesCreate = (props) => {
 
@@ -98,7 +101,30 @@ const CasesCreate = (props) => {
                     helperText={props?.problemError}
                     {...props.register("Problem" )}
                 />
-
+                <Container sx={{
+                    marginTop: "1em",
+                    marginBottom: "1em",
+                    padding: 0,
+                    display: "grid",
+                    justifyContent: "left"
+                }}>
+                    <label className={styles.inputFile}>
+                        <input
+                            type="file"
+                            onChange={props.handleUploadFile}
+                            multiple
+                        />
+                        <span>
+                        Выберите файл
+                    </span>
+                    </label>
+                    <Box>
+                        {props.inputFiles &&
+                            <Typography variant="body1">
+                                {props.inputFiles[0]?.name}
+                            </Typography>}
+                    </Box>
+                </Container>
                 <Button
                     disabled={props.subCategory === "" || props.category === ""}
                     type="submit"

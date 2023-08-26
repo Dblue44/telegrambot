@@ -6,8 +6,7 @@ export const fetchAllMyCases = createAsyncThunk(
     async () => {
         try{
             // UserId пока любой передавать можно
-            const { data } = await axios.get(`/0/odata/ITdsTelegramChat(08d48701-16b0-4fd5-a691-f8c72ecf7101)`);
-            debugger;
+            const { data } = await axios.get(`/cases`);
             return data;
         } catch (error) {
             return error.response.data;
